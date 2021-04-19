@@ -5682,11 +5682,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Git\\Project2\\just_trying\\verzia-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
+      "projectUniqueName": "C:\\Git\\Project2Backend\\just_trying\\verzia-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
       "projectName": "WebAppCarRental",
-      "projectPath": "C:\\Git\\Project2\\just_trying\\verzia-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
+      "projectPath": "C:\\Git\\Project2Backend\\just_trying\\verzia-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
       "packagesPath": "C:\\Users\\Branek\\.nuget\\packages\\",
-      "outputPath": "C:\\Git\\Project2\\just_trying\\verzia-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\obj\\",
+      "outputPath": "C:\\Git\\Project2Backend\\just_trying\\verzia-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Branek\\AppData\\Roaming\\NuGet\\NuGet.Config",

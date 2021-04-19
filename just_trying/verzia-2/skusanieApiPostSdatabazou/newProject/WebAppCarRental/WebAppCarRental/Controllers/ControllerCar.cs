@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppCarRental.Data;
+using WebAppCarRental.MakeJson;
 
 namespace WebAppCarRental.Controllers
 {
@@ -27,11 +28,16 @@ namespace WebAppCarRental.Controllers
             }
             if (list.Count >= 1)
             {
-                return Ok(list);
+                ModelCars modelCars = new ModelCars(list);
+                return Ok(modelCars.getJson());
+                //return Ok(list);
             }
             else
             {
-                return BadRequest("Our Car rental does not have that car");
+                //
+                String message = "Our Car rental does not have that car";
+                ModelErrorForFilter modelErrorForFilter = new ModelErrorForFilter(message);
+                return BadRequest(modelErrorForFilter.getJson());
             }
 
         }
