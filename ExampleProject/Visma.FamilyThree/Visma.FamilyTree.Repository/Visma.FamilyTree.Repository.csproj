@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Visma.FamilyTree.DbModels\Visma.FamilyTree.DbModels.csproj" />
+    <ProjectReference Include="..\Visma.FamilyTree.DTO\Visma.FamilyTree.DTO.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  visma.familythree.webapi:
+    image: ${DOCKER_REGISTRY-}vismafamilythreewebapi
+    build:
+      context: .
+      dockerfile: Visma.FamilyThree.WebAPI\Dockerfile
