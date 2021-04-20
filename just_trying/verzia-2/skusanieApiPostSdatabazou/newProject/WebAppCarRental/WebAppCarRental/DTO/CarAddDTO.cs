@@ -22,5 +22,8 @@ namespace WebAppCarRental.DTO
 
         [JsonRequired]
         public string Password { get; set; }
+
+        [JsonRequired]
+        public double Price { get; set; }
     }
 }

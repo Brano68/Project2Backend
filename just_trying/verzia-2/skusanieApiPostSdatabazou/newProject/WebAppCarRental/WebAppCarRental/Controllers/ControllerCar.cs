@@ -19,9 +19,9 @@ namespace WebAppCarRental.Controllers
         {
             List<string> list = new List<string>();
             ContosoCarReservationContext contosoCarReservationContext = new ContosoCarReservationContext();
-            foreach(var row in contosoCarReservationContext.Cars)
+            foreach (var row in contosoCarReservationContext.Cars)
             {
-                if(row.BrandOfCar == brandOfCar)
+                if (row.BrandOfCar == brandOfCar)
                 {
                     list.Add(row.Model);
                 }
@@ -41,5 +41,93 @@ namespace WebAppCarRental.Controllers
             }
 
         }
+
+        //https://localhost:44353/car/models?From=18.10.2022&To=19.10.2022
+        [HttpGet]
+        [Route("models")]
+        public IActionResult makeAvailable([FromQuery(Name = "From")] string from, [FromQuery(Name = "To")] string to)
+        {
+            /*
+            DateTime dateFrom = DateTime.Parse(from);
+            DateTime dateTo = DateTime.Parse(to);
+            double days = (dateTo - dateFrom).TotalDays;
+            */
+            //prejst databazu Reservation
+            //overit datumy
+            List<int> list = selectCarsWhichAreTaken(from, to);
+            List<AvailableCar> listOfAvailableCar = new List<AvailableCar>();
+
+            //ak bude list prazdny znamena to ze vsetke auta su volne
+            //cize vratime vsetke auta v jsone
+            ContosoCarReservationContext contosoCarReservationContext = new ContosoCarReservationContext();
+            if(list.Count == 0)
+            {
+                foreach (var row in contosoCarReservationContext.Cars)
+                {
+                    AvailableCar availableCar = new AvailableCar(row.BrandOfCar, row.Model, row.Plate);
+                    listOfAvailableCar.Add(availableCar);
+                }
+                DescribeCar describeCar = new DescribeCar(listOfAvailableCar);
+                return Ok(describeCar);
+            }
+            else
+            {
+                foreach (var row in contosoCarReservationContext.Cars)
+                {
+                    //teraz overime idecka
+                    if (list.Contains(row.Id))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        AvailableCar availableCar = new AvailableCar(row.BrandOfCar, row.Model, row.Plate);
+                        listOfAvailableCar.Add(availableCar);
+                    }
+                    DescribeCar describeCar = new DescribeCar(listOfAvailableCar);
+                    return Ok(describeCar);
+                }
+            }
+            
+            return BadRequest();
+        }
+
+        //pomocna metoda
+        private List<int> selectCarsWhichAreTaken(string dateFrom, string dateTo)
+        {
+            List<int> list = new List<int>();
+
+            DateTime dateTimeFrom = DateTime.Parse(dateFrom);
+            DateTime dateTimeTo = DateTime.Parse(dateTo);
+            //ak datum vratenia je mensi ako pozicania vrati false
+            if (dateTimeTo < dateTimeFrom)
+            {
+                return list;
+            }
+
+            //teraz prejde tabulku Reservations
+            ContosoCarReservationContext contosoCarReservationContext = new ContosoCarReservationContext();
+            foreach (var row in contosoCarReservationContext.Reservations)
+            {
+                DateTime dtFromDB = DateTime.Parse(row.From);
+                DateTime dtToDB = DateTime.Parse(row.To);
+                //ak zadany datum je vacsi ako dtToDb nech pokracuje
+                if (dateTimeFrom > dtToDB)
+                {
+                    continue;
+                }
+                else if (dateTimeTo < dtFromDB)
+                {
+                    continue;
+                }
+                else
+                {
+                    list.Add(row.CarId);
+                }
+            }
+            return list;
+        }
     }
+
+
 }

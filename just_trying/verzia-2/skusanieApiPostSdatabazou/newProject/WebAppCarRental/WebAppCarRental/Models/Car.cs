@@ -17,5 +17,7 @@ namespace WebAppCarRental.Models
         [Required]
         public string Plate { get; set; }
         //public string Reservations { get; set; }
+        [Required]
+        public double Price { get; set; }
     }
 }

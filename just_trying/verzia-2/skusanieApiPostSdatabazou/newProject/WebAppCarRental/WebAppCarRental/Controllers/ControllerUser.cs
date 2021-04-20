@@ -153,6 +153,7 @@ namespace WebAppCarRental.Controllers
             int idUser = 0, idCar = 0;
             string email = "";
             ContosoUserAdminContext contosoUserAdminContext = new Data.ContosoUserAdminContext();
+            double pricePerDay = 0;
             //zistime idecko usra
             foreach (var row in contosoUserAdminContext.Users)
             {
@@ -166,6 +167,7 @@ namespace WebAppCarRental.Controllers
                     {
                         if(row2.Plate == plate)
                         {
+                            pricePerDay = row2.Price;
                             idCar = row2.Id;
                         }
                     }
@@ -193,6 +195,9 @@ namespace WebAppCarRental.Controllers
                     To = to,
                     CarId = idCar,
                     UserId = idUser,
+                    //metoda na zistenie kolko dni a vynasobime cenou vozidla ale este pripocitame raz cenu vozidla
+                    //lebo pri pocitani dni vrati o jeden menej
+                    PricePerDays = howManyDays(from, to) * pricePerDay + pricePerDay,
                 };
                 contosoCarReservationContext2.Add(reservation);
                 contosoCarReservationContext2.SaveChanges();
@@ -239,5 +244,14 @@ namespace WebAppCarRental.Controllers
             return true;
         }
 
+
+        //pomocna metoda na vratenie kolko dni
+        private double howManyDays(string from, string to)
+        {
+            DateTime dateFrom = DateTime.Parse(from);
+            DateTime dateTo = DateTime.Parse(to);
+            double days = (dateTo - dateFrom).TotalDays;
+            return days;
+        }
     }
 }

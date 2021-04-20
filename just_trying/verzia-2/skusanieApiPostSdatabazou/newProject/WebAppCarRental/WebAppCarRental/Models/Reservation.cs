@@ -25,5 +25,7 @@ namespace WebAppCarRental.Models
         public string From { get; set; }
         [Required]
         public string To { get; set; }
+
+        public double PricePerDays { get; set; }
     }
 }

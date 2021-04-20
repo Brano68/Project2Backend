@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppCarRental.Data;
 
 namespace WebAppCarRental.Migrations.ContosoCarReservation
 {
     [DbContext(typeof(ContosoCarReservationContext))]
-    partial class ContosoCarReservationContextModelSnapshot : ModelSnapshot
+    [Migration("20210420131204_addPrice")]
+    partial class addPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +60,6 @@ namespace WebAppCarRental.Migrations.ContosoCarReservation
                     b.Property<string>("From")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PricePerDays")
-                        .HasColumnType("float");
 
                     b.Property<string>("To")
                         .IsRequired()

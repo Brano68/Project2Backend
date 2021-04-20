@@ -164,9 +164,10 @@ namespace WebAppCarRental.Controllers
             string model = carAddDTO.Model;
             string brandOfCar = carAddDTO.BrandOfCar;
             string plate = carAddDTO.Plate;
+            double price = carAddDTO.Price;
             //overime ci prisli vsetke udaje
-            if(login == null || password == null || model == null || brandOfCar == null || plate == null
-                || login == "" || password == "" || model == "" || brandOfCar == "" || plate == null)
+            if(login == null || password == null || model == null || brandOfCar == null || plate == null || price == null
+                || login == "" || password == "" || model == "" || brandOfCar == "" || plate == "")
             {
                 return BadRequest("Wrong Data!!!");
             }
@@ -191,6 +192,7 @@ namespace WebAppCarRental.Controllers
                         Model = model,
                         BrandOfCar = brandOfCar,
                         Plate =plate,
+                        Price = price,
                     };
                     contosoCarReservationContext.Add(car);
                     contosoCarReservationContext.SaveChanges();
