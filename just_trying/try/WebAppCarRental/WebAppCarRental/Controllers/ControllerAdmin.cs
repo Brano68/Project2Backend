@@ -1,26 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebAppCarRental.Data;
 using WebAppCarRental.DTO;
-using WebAppCarRental.MakeToken;
 using WebAppCarRental.Models;
 
 namespace WebAppCarRental.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("admin")]
     public class ControllerAdmin : ControllerBase
     {
         //globalne heslo bez ktoreho nie je mozne vytvorit ADMINA!!!
         private const string globalPasswordAdmin = "112233AA";
+        private readonly Interfaces.IJwtAuthManager jwtAuthManager;
+        public ControllerAdmin(Interfaces.IJwtAuthManager jwtAuthManager)
+        {
+            this.jwtAuthManager = jwtAuthManager;
+        }
 
         //tato metoda sluzi na vytvorenie Admina
         //localhost:44353/admin/create
         //body: {"Login":"Admin1","Password":"11111111","Email":"admin1@gmail.com","GlobalPassword":"112233AA"}
+        [AllowAnonymous]
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult<AdminDTO>> PostAdmin([FromBody] AdminDTO adminDTO)
@@ -73,6 +81,7 @@ namespace WebAppCarRental.Controllers
         //tato metoda sluzi na prihlasenie ADMINA!!!
         //localhost:44353/admin/login
         //body: {"Login":"Janko","Password":"123456"}
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<AdminLoginDTO>> PostLogin([FromBody] AdminLoginDTO adminLoginDTO)
@@ -92,15 +101,19 @@ namespace WebAppCarRental.Controllers
                 if (row.Login == login && row.Password == password)
                 {
                     int id = row.Id;
-                    string json = new Token().createTokenWithDateAndTimeAsJson();
                     using (var context = new Data.ContosoUserAdminContext())
                     {
-                        var entity = context.Admins.FirstOrDefault(item => item.Id == id);
-                        entity.Token = json;
-                        context.Admins.Update(entity);
-                        context.SaveChanges();
+                        var entity = context.Users.FirstOrDefault(item => item.Id == id);
+                        var token = jwtAuthManager.Authenticate(login, password);
+                        if (token == null || token.Equals("")) return Unauthorized("Invalid user");
+                        else
+                        {
+                            entity.Token = token;
+                            context.Users.Update(entity);
+                            context.SaveChanges();
+                            return Ok("Signed up! " + token);
+                        }
                     }
-                    return Ok("Token with time has been generated " + json);
                 }
             }
             return BadRequest("Wrong Data!!!");
@@ -115,11 +128,11 @@ namespace WebAppCarRental.Controllers
         public async Task<ActionResult<AdminLogoutDTO>> PostLogout([FromBody] AdminLogoutDTO adminLogoutDTO)
         {
             string login = adminLogoutDTO.Login;
-            string token = adminLogoutDTO.Token;
-            if(login == null || token == null || login == "" || token == "")
+            if(login == null || login == "")
             {
                 return BadRequest("Wrong Data");
             }
+
             //overime ci login aj token sa nachadza v tabulke
             ContosoUserAdminContext contosoUserAdminContext = new ContosoUserAdminContext();
             foreach (var row in contosoUserAdminContext.Admins)
@@ -127,24 +140,23 @@ namespace WebAppCarRental.Controllers
                 //ak sa Login nachadza v tabulke
                 if(row.Login == login)
                 {
+                    var identity = HttpContext.User.Identity as ClaimsIdentity;
+                    IEnumerable<Claim> claim = identity.Claims;
+                    var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
+                    if (!loginClaim.Value.Equals(login)) return Unauthorized();
+
                     //vyberieme token patriaci k Loginu
-                    string tokenWithDateFromDatabase = row.Token;
-                    var details = JObject.Parse(tokenWithDateFromDatabase);
-                    string tokenWithoutDate = details["Token"].ToString();
                     //ak sa token aj login zhoduju s tym ktory pride cez Frontend
                     //tak Adminovi vymazeme cely Json Token
-                    if(token == tokenWithoutDate)
+                    int id = row.Id;
+                    using (var context = new Data.ContosoUserAdminContext())
                     {
-                        int id = row.Id;
-                        using (var context = new Data.ContosoUserAdminContext())
-                        {
-                            var entity = context.Admins.FirstOrDefault(item => item.Id == id);
-                            entity.Token = "";
-                            context.Admins.Update(entity);
-                            context.SaveChanges();
-                        }
-                        return Ok("Admin has been looged out!!!");
+                        var entity = context.Admins.FirstOrDefault(item => item.Id == id);
+                        entity.Token = "";
+                        context.Admins.Update(entity);
+                        context.SaveChanges();
                     }
+                    return Ok("Admin has been looged out!!!");
                 }
             }
                 return BadRequest("Wrong data!!!");
@@ -176,6 +188,11 @@ namespace WebAppCarRental.Controllers
             {
                 if (row.Login == login && row.Password == password)
                 {
+                    var identity = HttpContext.User.Identity as ClaimsIdentity;
+                    IEnumerable<Claim> claim = identity.Claims;
+                    var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
+                    if (!loginClaim.Value.Equals(login)) return Unauthorized();
+
                     //overime ci SPZ auta sa uz nenachadza v tabulke Cars
                     ContosoCarReservationContext contosoCarReservationContext = new ContosoCarReservationContext();
                     foreach (var row2 in contosoCarReservationContext.Cars)

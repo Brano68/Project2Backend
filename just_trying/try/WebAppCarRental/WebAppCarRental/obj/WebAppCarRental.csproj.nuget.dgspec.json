@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Uživatel\\source\\repos\\p2\\Project2\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj": {}
+    "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Uživatel\\source\\repos\\p2\\Project2\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj": {
+    "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Uživatel\\source\\repos\\p2\\Project2\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
+        "projectUniqueName": "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
         "projectName": "WebAppCarRental",
-        "projectPath": "C:\\Users\\Uživatel\\source\\repos\\p2\\Project2\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
+        "projectPath": "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
         "packagesPath": "C:\\Users\\Uživatel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Uživatel\\source\\repos\\p2\\Project2\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\obj\\",
+        "outputPath": "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\try\\WebAppCarRental\\WebAppCarRental\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Uživatel\\AppData\\Roaming\\NuGet\\NuGet.Config",

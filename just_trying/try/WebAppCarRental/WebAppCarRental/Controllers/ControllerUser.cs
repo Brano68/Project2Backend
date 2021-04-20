@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using WebAppCarRental.Data;
 using WebAppCarRental.DTO;
 using WebAppCarRental.Email;
-using WebAppCarRental.MakeToken;
 using WebAppCarRental.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
 
 namespace WebAppCarRental.Controllers
 {
@@ -24,6 +24,7 @@ namespace WebAppCarRental.Controllers
         {
             this.jwtAuthManager = jwtAuthManager;
         }
+
         //vytvorenie uctu
         //https://localhost:44353/userrr/create
         //body: {"Login":"Brano","Password":"123456","Email":"branislav.nebus@kosickaaademia.com"}
@@ -61,8 +62,6 @@ namespace WebAppCarRental.Controllers
             return Ok();
         }
 
-
-
         //prihlasenie a vygenerovanie tokenu s casom aktualnym
         //https://localhost:44353/userrr/login
         //body: {"Login":"Brano","Password":"123456"}
@@ -77,6 +76,7 @@ namespace WebAppCarRental.Controllers
             {
                 return BadRequest("Wrong data!!!");
             }
+
             //overenie ci login a heslo su spravne
             ContosoUserAdminContext contosoUserAdminContext = new Data.ContosoUserAdminContext();
             foreach (var row in contosoUserAdminContext.Users)
@@ -85,12 +85,11 @@ namespace WebAppCarRental.Controllers
                 {
                     //generovanie tokenu a casu a aktualizacia do databazy!!!
                     int id = row.Id;
-                    //string json = new Token().createTokenWithDateAndTimeAsJson();
                     using (var context = new Data.ContosoUserAdminContext())
                     {
                         var entity = context.Users.FirstOrDefault(item => item.Id == id);
                         var token = jwtAuthManager.Authenticate(login, password);
-                        if (token == null || token.Equals("")) return Unauthorized();
+                        if (token == null || token.Equals("")) return Unauthorized("Invalid user");
                         else
                         {
                             entity.Token = token;
@@ -98,9 +97,7 @@ namespace WebAppCarRental.Controllers
                             context.SaveChanges();
                             return Ok("Signed up! " +token);
                         }
-                        
                     }
-                    //return Ok("You have just been signed up " );
                 }
             }
             return BadRequest("Wrong data!!!"); ;
@@ -115,11 +112,11 @@ namespace WebAppCarRental.Controllers
         public async Task<ActionResult<UserLogoutDTO>> PostLogout([FromBody] UserLogoutDTO userLogoutDTO)
         {
             string login = userLogoutDTO.Login;
-            string token = userLogoutDTO.Token;
-            if (login == null || token == null || login == "" || token == "")
+            if (login == null || login == "")
             {
                 return BadRequest("Wrong Data");
             }
+
             //overime ci login aj token sa nachadza v tabulke
             ContosoUserAdminContext contosoUserAdminContext = new ContosoUserAdminContext();
             foreach (var row in contosoUserAdminContext.Users)
@@ -128,32 +125,26 @@ namespace WebAppCarRental.Controllers
                 if (row.Login == login)
                 {
                     //vyberieme token patriaci k Loginu
-                    string tokenWithDateFromDatabase = row.Token;
-                    var details = JObject.Parse(tokenWithDateFromDatabase);
-                    string tokenWithoutDate = details["Token"].ToString();
+                    //string tokenis = row.Token;
                     //ak sa token aj login zhoduju s tym ktory pride cez Frontend
                     //tak Userovi vymazeme cely Json Token
-                    if (token == tokenWithoutDate)
+                    var identity = HttpContext.User.Identity as ClaimsIdentity;
+                    IEnumerable<Claim> claim = identity.Claims;
+                    var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
+                    if (!loginClaim.Value.Equals(login)) return Unauthorized();
+
+                    int id = row.Id;
+                    using (var context = new Data.ContosoUserAdminContext())
                     {
-                        int id = row.Id;
-                        using (var context = new Data.ContosoUserAdminContext())
-                        {
-                            var entity = context.Users.FirstOrDefault(item => item.Id == id);
-                            entity.Token = "";
-                            context.Users.Update(entity);
-                            context.SaveChanges();
-                        }
-                        return Ok("User has been looged out!!!");
+                        var entity = context.Users.FirstOrDefault(item => item.Id == id);
+                        entity.Token = "";
+                        context.Users.Update(entity);
+                        context.SaveChanges();
                     }
+                    return Ok("User has been looged out!!!");
                 }
             }
             return BadRequest("Wrong data!!!");
-        }
-
-        [HttpGet("try")]
-        public string Try()
-        {
-            return "ahaa ideeee";
         }
 
         //vypozicanie auta
@@ -172,6 +163,7 @@ namespace WebAppCarRental.Controllers
             {
                 return BadRequest("Wrong data!!!");
             }
+
             //zistime si user a heslo cu su spravne a ak ano tak ake Id ma user
             int idUser = 0, idCar = 0;
             string email = "";
@@ -182,6 +174,11 @@ namespace WebAppCarRental.Controllers
                 
                 if (login == row.Login && password == row.Password)
                 {
+                    var identity = HttpContext.User.Identity as ClaimsIdentity;
+                    IEnumerable<Claim> claim = identity.Claims;
+                    var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
+                    if (!loginClaim.Value.Equals(login)) return Unauthorized();
+
                     idUser = row.Id;
                     email = row.Email;
                     //teraz zistime Idecko auta
