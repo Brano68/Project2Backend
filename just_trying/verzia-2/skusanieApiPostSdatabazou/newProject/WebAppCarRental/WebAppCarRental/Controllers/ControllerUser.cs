@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAppCarRental.Data;
 using WebAppCarRental.DTO;
 using WebAppCarRental.Email;
+using WebAppCarRental.MakeJson;
 using WebAppCarRental.MakeToken;
 using WebAppCarRental.Models;
 
@@ -29,7 +30,8 @@ namespace WebAppCarRental.Controllers
             if (login == null || password == null || email == null
                 || login == "" || password == "" || email == "")
             {
-                return BadRequest("Wrong data!!!");
+                Message message = new Message("Wrong data!!!", 400);
+                return BadRequest(message);
             }
             //overenie ci login taky uz sa nenachadza
             ContosoUserAdminContext contosoUserAdminContext = new Data.ContosoUserAdminContext();
@@ -37,7 +39,8 @@ namespace WebAppCarRental.Controllers
             {
                 if (login == row.Login)
                 {
-                    return BadRequest("Login already exist!!!");
+                    Message message = new Message("Login already exist!!!", 400);
+                    return BadRequest(message);
                 }
             }
             //ak je vsetko OK zapis do databazy AllMembers tabulky Users
@@ -49,7 +52,8 @@ namespace WebAppCarRental.Controllers
             };
             contosoUserAdminContext.Add(user);
             contosoUserAdminContext.SaveChanges();
-            return Ok();
+            Message message1 = new Message("User has been created!!!", 201);
+            return Ok(message1);
         }
 
 
@@ -65,7 +69,8 @@ namespace WebAppCarRental.Controllers
             string password = userLoginDTO.Password;
             if (login == null || password == null || login == "" || password == "")
             {
-                return BadRequest("Wrong data!!!");
+                Message message = new Message("Wrong data!!!", 400);
+                return BadRequest(message);
             }
             //overenie ci login a heslo su spravne
             ContosoUserAdminContext contosoUserAdminContext = new Data.ContosoUserAdminContext();
@@ -83,10 +88,12 @@ namespace WebAppCarRental.Controllers
                         context.Users.Update(entity);
                         context.SaveChanges();
                     }
+
                     return Ok("You have just been signed up " + json);
                 }
             }
-            return BadRequest("Wrong data!!!"); ;
+            Message message3 = new Message("Wrong data!!!", 400);
+            return BadRequest(message3);
         }
 
 
@@ -97,11 +104,12 @@ namespace WebAppCarRental.Controllers
         [Route("logout")]
         public async Task<ActionResult<UserLogoutDTO>> PostLogout([FromBody] UserLogoutDTO userLogoutDTO)
         {
+            Message message = new Message("Wrong data", 400);
             string login = userLogoutDTO.Login;
             string token = userLogoutDTO.Token;
             if (login == null || token == null || login == "" || token == "")
             {
-                return BadRequest("Wrong Data");
+                return BadRequest(message);
             }
             //overime ci login aj token sa nachadza v tabulke
             ContosoUserAdminContext contosoUserAdminContext = new ContosoUserAdminContext();
@@ -126,11 +134,12 @@ namespace WebAppCarRental.Controllers
                             context.Users.Update(entity);
                             context.SaveChanges();
                         }
-                        return Ok("User has been looged out!!!");
+                        Message message1 = new Message("User has been looged out!!!", 200);
+                        return Ok(message1);
                     }
                 }
             }
-            return BadRequest("Wrong data!!!");
+            return BadRequest(message);
         }
 
         //vypozicanie auta
@@ -147,7 +156,8 @@ namespace WebAppCarRental.Controllers
             if(login == null || password == null || from == null || to == null || plate == null
                 || login == "" || password == "" || from == "" || to == "" || plate == "")
             {
-                return BadRequest("Wrong data!!!");
+                Message message = new Message("Wrong data!!!", 400);
+                return BadRequest(message);
             }
             //zistime si user a heslo cu su spravne a ak ano tak ake Id ma user
             int idUser = 0, idCar = 0;
@@ -176,7 +186,8 @@ namespace WebAppCarRental.Controllers
             //teraz overime ci idecko usra a idecko auta je ine ako 0 ked hej pokracujeme ked ne vraciame BadRequest
             if(idCar == 0 || idUser == 0)
             {
-                return BadRequest("Car or user was not found!!!");
+                Message message = new Message("Car or user was not found!!!", 400);
+                return BadRequest(message);
             }
             //teraz overime datum ci auto je volne na nas prijaty datum
             //cize prejdem databazu a overujem kde je idCar a checkujem datum ci sa neprekryva!!!
@@ -201,12 +212,13 @@ namespace WebAppCarRental.Controllers
                 };
                 contosoCarReservationContext2.Add(reservation);
                 contosoCarReservationContext2.SaveChanges();
-
-                return Ok();
+                Message message = new Message("You should get an email", 200);
+                return Ok(message);
             }
             else
             {
-                return BadRequest("Date is taken already!!!");
+                Message message = new Message("Date is taken already!!!", 400);
+                return BadRequest(message);
             }
         }
 

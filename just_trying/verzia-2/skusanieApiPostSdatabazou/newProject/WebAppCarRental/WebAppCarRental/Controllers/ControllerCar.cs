@@ -72,6 +72,8 @@ namespace WebAppCarRental.Controllers
             }
             else
             {
+                //return Ok(list);
+                
                 foreach (var row in contosoCarReservationContext.Cars)
                 {
                     //teraz overime idecka
@@ -84,12 +86,10 @@ namespace WebAppCarRental.Controllers
                         AvailableCar availableCar = new AvailableCar(row.BrandOfCar, row.Model, row.Plate);
                         listOfAvailableCar.Add(availableCar);
                     }
-                    DescribeCar describeCar = new DescribeCar(listOfAvailableCar);
-                    return Ok(describeCar);
                 }
+                DescribeCar describeCar = new DescribeCar(listOfAvailableCar);
+                return Ok(describeCar);
             }
-            
-            return BadRequest();
         }
 
         //pomocna metoda
