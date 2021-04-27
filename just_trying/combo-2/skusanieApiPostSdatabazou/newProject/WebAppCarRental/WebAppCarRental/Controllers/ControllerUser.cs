@@ -93,7 +93,7 @@ namespace WebAppCarRental.Controllers
                     {
                         var entity = context.Users.FirstOrDefault(item => item.Id == id);
                         var token = jwtAuthManager.Authenticate(login, password);
-                        if (token == null || token.Equals("")) return Unauthorized("Invalid user");
+                        if (token == null || token.Equals("")) return Unauthorized(new Message("Error occured during authentication", 401));
                         else
                         {
                             entity.Token = token;
@@ -131,7 +131,7 @@ namespace WebAppCarRental.Controllers
                     var identity = HttpContext.User.Identity as ClaimsIdentity;
                     IEnumerable<Claim> claim = identity.Claims;
                     var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
-                    if (!loginClaim.Value.Equals(login)) return Unauthorized();
+                    if (!loginClaim.Value.Equals(login)) return Unauthorized(new Message("Invalid user-token relationship", 401));
                     //vyberieme token patriaci k Loginu   
                     //ak sa token aj login zhoduju s tym ktory pride cez Frontend
                     //tak Userovi vymazeme cely Json Token                    
@@ -180,7 +180,7 @@ namespace WebAppCarRental.Controllers
                     var identity = HttpContext.User.Identity as ClaimsIdentity;
                     IEnumerable<Claim> claim = identity.Claims;
                     var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
-                    if (!loginClaim.Value.Equals(login)) return Unauthorized();
+                    if (!loginClaim.Value.Equals(login)) return Unauthorized(new Message("Invalid user-token relationship", 401));
 
                     idUser = row.Id;
                     email = row.Email;
