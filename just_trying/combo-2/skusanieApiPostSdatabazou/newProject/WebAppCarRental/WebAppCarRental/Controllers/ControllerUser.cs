@@ -284,5 +284,46 @@ namespace WebAppCarRental.Controllers
             double days = (dateTo - dateFrom).TotalDays;
             return days;
         }
+
+
+        ////3.5.2021
+        ///https://localhost:44353/userrr/reservation
+        [HttpGet]
+        [Route("reservation")]
+        public IActionResult showReservations([FromQuery(Name = "LoginOfUser")] string loginOfUser)
+        {
+            if(loginOfUser == null)
+            {
+                return BadRequest(new Message("Login is empty",401));
+            }
+            //overenie tokenu
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IEnumerable<Claim> claim = identity.Claims;
+            var loginClaim = claim.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
+            if (!loginClaim.Value.Equals(loginOfUser)) return Unauthorized(new Message("Invalid user-token relationship", 401));
+
+            //ak token prejde
+            //mapujeme tabulku rezervacie
+            ContosoCarReservationContext contosoCarReservationContext = new ContosoCarReservationContext();
+            ContosoCarReservationContext contosoCarReservationContext2 = new ContosoCarReservationContext();
+            List<Order> orders = new List<Order>();
+            foreach(var row in contosoCarReservationContext.Reservations)
+            {
+                if(row.UserLogin == loginOfUser)
+                {
+                    foreach(var row2 in contosoCarReservationContext2.Cars)
+                    {
+                        if(row.CarId == row2.Id)
+                        {
+                            Order order = new Order(row2.BrandOfCar, row2.Model, row2.Plate, row.PricePerDays, row.From, row.To);
+                            orders.Add(order);
+                        }
+                    }
+                    
+                }
+            }
+            MyOrders myOrders = new MyOrders(orders);
+            return Ok(myOrders);
+        }
     }
 }
