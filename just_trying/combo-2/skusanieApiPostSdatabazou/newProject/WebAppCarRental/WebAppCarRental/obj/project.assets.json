@@ -6427,19 +6427,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Branek\\.nuget\\packages\\": {}
+    "C:\\Users\\Uživatel\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Git\\Project2Backend\\just_trying\\combo-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
+      "projectUniqueName": "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\combo-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
       "projectName": "WebAppCarRental",
-      "projectPath": "C:\\Git\\Project2Backend\\just_trying\\combo-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
-      "packagesPath": "C:\\Users\\Branek\\.nuget\\packages\\",
-      "outputPath": "C:\\Git\\Project2Backend\\just_trying\\combo-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\obj\\",
+      "projectPath": "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\combo-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\WebAppCarRental.csproj",
+      "packagesPath": "C:\\Users\\Uživatel\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Uživatel\\source\\repos\\p2backend\\Project2Backend\\just_trying\\combo-2\\skusanieApiPostSdatabazou\\newProject\\WebAppCarRental\\WebAppCarRental\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Branek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Uživatel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

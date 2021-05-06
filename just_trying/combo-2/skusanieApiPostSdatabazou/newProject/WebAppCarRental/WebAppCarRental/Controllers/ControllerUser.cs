@@ -52,16 +52,19 @@ namespace WebAppCarRental.Controllers
                 }
             }
             //ak je vsetko OK zapis do databazy AllMembers tabulky Users
+            var token = jwtAuthManager.Authenticate(login, password);
+            if (token == null || token.Equals("")) return Unauthorized(new Message("Error occured during authentication", 401));
             User user = new User()
             {
                 Login = login,
                 Password = password,
-                Email = email
+                Email = email,
+                Token = token
             };
             contosoUserAdminContext.Add(user);
             contosoUserAdminContext.SaveChanges();
-            Message message1 = new Message("User has been created!!!", 201);
-            return Ok(message1);
+
+            return Ok(new JsonWithToken(token, 200, "user", "User has been created!"));
         }
 
 
@@ -99,7 +102,7 @@ namespace WebAppCarRental.Controllers
                             entity.Token = token;
                             context.Users.Update(entity);
                             context.SaveChanges();
-                            return Ok(new JsonWithToken(token, 200));
+                            return Ok(new JsonWithToken(token, 200, "user", "Login successful!"));
                         }
                     }
                 }

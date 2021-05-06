@@ -73,16 +73,19 @@ namespace WebAppCarRental.Controllers
             else
             {
                 //ak je heslo spravne vytvorime Admina a ulozime do tabulky
+                var token = jwtAuthManager.Authenticate(login, password);
+                if (token == null || token.Equals("")) return Unauthorized(new Message("Error occured during authentication", 401));
                 Admin admin = new Admin()
                 {
                     Login = login,
                     Password = password,
                     Email = email,
+                    Token = token
                 };
                 contosoUserAdminContext.Add(admin);
                 contosoUserAdminContext.SaveChanges();
-                Message message = new Message("Admin has been created.", 201);
-                return Ok(message);
+                
+                return Ok(new JsonWithToken(token, 200, "admin", "Admin has been created!"));
             }
                 
         }
@@ -121,7 +124,7 @@ namespace WebAppCarRental.Controllers
                             entity.Token = token;
                             context.Admins.Update(entity);
                             context.SaveChanges();
-                            return Ok(new JsonWithToken(token, 200));
+                            return Ok(new JsonWithToken(token, 200, "admin", "Login successful!"));
                         }
                     }
                 }

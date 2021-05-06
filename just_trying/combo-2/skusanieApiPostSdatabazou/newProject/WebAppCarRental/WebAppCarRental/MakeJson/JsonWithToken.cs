@@ -7,12 +7,16 @@ namespace WebAppCarRental.MakeJson
 {
     public class JsonWithToken
     {
+        public string Message { get; set; }
         public string Token { get; set; }
         public int StatusCode { get; set; }
-        public JsonWithToken(string token, int statusCode)
+        public string Role { get; set; }
+        public JsonWithToken(string token, int statusCode, string role, string message)
         {
+            Message = message;
             Token = token;
             StatusCode = statusCode;
+            Role = role;
         }
     }
 }
