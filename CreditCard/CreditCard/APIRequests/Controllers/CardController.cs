@@ -13,7 +13,7 @@ using System.Security.Claims;
 namespace APIRequests.Controllers
 {
     [ApiController]
-    [Route("card")]
+    [Route("userrr")]
     public class CardController : ControllerBase
     {
         [AllowAnonymous]
@@ -21,13 +21,18 @@ namespace APIRequests.Controllers
         [Route("pay")]
         public async Task<ActionResult<CardDTO>> PostCard([FromBody] CardDTO cardDTO)
         {
-            int cardNumber = cardDTO.CardNumber;
-            int expirationDate = cardDTO.ExpirationDate;
+            string login = cardDTO.Login;
+            string email = cardDTO.Email;
+            int carId = cardDTO.CarId;
+            int userId = cardDTO.UserId;
+            string from = cardDTO.From;
+            string to = cardDTO.To;
+            string cardNumber = cardDTO.CardNumber;
+            string expirationDate = cardDTO.ExpirationDate;
             int cvc = cardDTO.Cvc;
-            int sum = cardDTO.Sum;
-            Console.WriteLine(cardNumber);
+            int price = cardDTO.Price;
 
-            return null;
+            return Ok("Údaje: " + login + " " + email + " " + carId + " " + userId + " " + from + " " + to + " " + cardNumber + " " + expirationDate + " " + cvc + " " + price);
 
         }
         

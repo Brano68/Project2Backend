@@ -9,16 +9,34 @@ namespace APIRequests.DTO
     public class CardDTO
     {
         [JsonRequired]
-        public int CardNumber { get; set; }
+        public string Login { get; set; }
 
         [JsonRequired]
-        public int ExpirationDate { get; set; }
+        public string Email { get; set; }
+
+        [JsonRequired]
+        public int CarId { get; set; }
+
+        [JsonRequired]
+        public int UserId { get; set; }
+
+        [JsonRequired]
+        public string From { get; set; }
+
+        [JsonRequired]
+        public string To { get; set; }
+
+        [JsonRequired]
+        public string CardNumber { get; set; }
+
+        [JsonRequired]
+        public string ExpirationDate { get; set; }
 
         [JsonRequired]
         public int Cvc { get; set; }
 
         [JsonRequired]
-        public int Sum { get; set; }
+        public int Price { get; set; }
 
     }
 }
