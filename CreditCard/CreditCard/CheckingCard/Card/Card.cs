@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CheckingCard.Card
 {
-    class Card
+    public class Card
     {
         private String cardNumber;
         private String expirationDate;

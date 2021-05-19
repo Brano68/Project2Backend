@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CheckingCard.Check
 {
-    class Check
+    public class Check
     {
         Card.Card card1 = new Card.Card("123456789012", "12.34", 123, 10);
         Card.Card card2 = new Card.Card("111111111111", "11.11", 111, 20);

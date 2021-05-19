@@ -10,6 +10,9 @@ using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using APIRequests.CreateJSON;
 
+
+
+
 namespace APIRequests.Controllers
 {
     [ApiController]
@@ -32,12 +35,25 @@ namespace APIRequests.Controllers
             int cvc = cardDTO.Cvc;
             int price = cardDTO.Price;
 
-            //Message message = new Message("Test", 400);
-            //return BadRequest(message);
-            PayRequest payRequest = new PayRequest("Payment was successful", price, 200, carId, userId, login, from, to);
-            return Ok(payRequest);
-            //return Ok("Údaje: " + login + " " + email + " " + carId + " " + userId + " " + from + " " + to + " " + cardNumber + " " + expirationDate + " " + cvc + " " + price);
-
+            CheckingCard.Check.Check check = new CheckingCard.Check.Check();
+            int n = check.Checking(cardNumber, expirationDate, cvc, price);
+            if(n == -1)
+            {
+                Message message1 = new Message("The card is invalid", 400);
+                return BadRequest(message1);
+            }
+            if (n == 0)
+            {
+                Message message2 = new Message("Not enough money in the account", 400);
+                return BadRequest(message2);
+            }
+            if (n == 1)
+            {
+                PayRequest payRequest = new PayRequest("Payment was successful", price, 200, carId, userId, login, from, to);
+                return Ok(payRequest);
+            }
+            Message message = new Message("The card is invalid", 400);
+            return BadRequest(message);
         }
         
         [HttpGet]
