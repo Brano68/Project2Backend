@@ -25,9 +25,21 @@ namespace APIRequests.Controllers
             int expirationDate = cardDTO.ExpirationDate;
             int cvc = cardDTO.Cvc;
             int sum = cardDTO.Sum;
+            Console.WriteLine(cardNumber);
 
             return null;
 
+        }
+        
+        [HttpGet]
+        [Route("skuska")]
+        public IActionResult PostTest([FromQuery(Name = "ILYA")] string ilya)
+        {
+            
+            
+            
+        
+            return Ok("Ahoj" + ilya);
         }
 
     }
