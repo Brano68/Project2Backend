@@ -8,11 +8,11 @@ namespace CheckingCard.Check
 {
     class Check
     {
-        Card.Card card1 = new Card.Card("123456789012", "1234", "123", 10);
-        Card.Card card2 = new Card.Card("111111111111", "1111", "111", 20);
-        Card.Card card3 = new Card.Card("222222222222", "2222", "222", 30);
-        Card.Card card4 = new Card.Card("333333333333", "3333", "333", 40);
-        Card.Card card5 = new Card.Card("444444444444", "4444", "444", 50);
+        Card.Card card1 = new Card.Card("123456789012", "12.34", 123, 10);
+        Card.Card card2 = new Card.Card("111111111111", "11.11", 111, 20);
+        Card.Card card3 = new Card.Card("222222222222", "22.22", 222, 30);
+        Card.Card card4 = new Card.Card("333333333333", "33.33", 333, 40);
+        Card.Card card5 = new Card.Card("444444444444", "44.44", 444, 50);
 
         public List<Card.Card> cards = new List<Card.Card>();
 
@@ -25,44 +25,25 @@ namespace CheckingCard.Check
             cards.Add(card5);
         }
 
-        public void PrintAllCards()
-        {
-            foreach (Card.Card card in cards)
-            {
-                Console.WriteLine(card.CardNumber);
-            }
-        }
-
-        public void Test()
-        {
-            Console.WriteLine("1");
-            Console.WriteLine(card1.CardNumber);
-            Console.WriteLine(2);
-        }
-        public bool Checking(string cardNumber, string expirationDate, string cvc, int sum)
+        public int Checking(string cardNumber, string expirationDate, int cvc, int sum)
         {
 
             AddCards();
             foreach (Card.Card card in cards)
             {
-                if (card.CardNumber.Equals(cardNumber) && card.ExpirationDate.Equals(expirationDate) && card.Cvc.Equals(cvc))
+                if (card.CardNumber.Equals(cardNumber) && card.ExpirationDate.Equals(expirationDate) && card.Cvc == cvc)
                 {
-                    Console.WriteLine("The card is valid");
                     if (sum < card.Sum)
                     {
-                        Console.WriteLine("Payment was successful");
-                        return true;
+                        return 1;
                     }
                     else
                     {
-                        Console.WriteLine("Not enough money in the account");
-                        return false;
+                        return 0;
                     }
-
                 }
             }
-            Console.WriteLine("The card is invalid");
-            return false;
+            return -1;
         }
     }
 }
