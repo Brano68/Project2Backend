@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json.Linq;
 using System.Security.Claims;
-
+using APIRequests.CreateJSON;
 
 namespace APIRequests.Controllers
 {
@@ -32,7 +32,10 @@ namespace APIRequests.Controllers
             int cvc = cardDTO.Cvc;
             int price = cardDTO.Price;
 
-            return Ok("Údaje: " + login + " " + email + " " + carId + " " + userId + " " + from + " " + to + " " + cardNumber + " " + expirationDate + " " + cvc + " " + price);
+            Message message = new Message("Test", 400);
+            return BadRequest(message);
+
+            //return Ok("Údaje: " + login + " " + email + " " + carId + " " + userId + " " + from + " " + to + " " + cardNumber + " " + expirationDate + " " + cvc + " " + price);
 
         }
         
