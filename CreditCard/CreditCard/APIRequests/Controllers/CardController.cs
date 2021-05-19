@@ -32,9 +32,10 @@ namespace APIRequests.Controllers
             int cvc = cardDTO.Cvc;
             int price = cardDTO.Price;
 
-            Message message = new Message("Test", 400);
-            return BadRequest(message);
-
+            //Message message = new Message("Test", 400);
+            //return BadRequest(message);
+            PayRequest payRequest = new PayRequest("Payment was successful", price, 200, carId, userId, login, from, to);
+            return Ok(payRequest);
             //return Ok("Údaje: " + login + " " + email + " " + carId + " " + userId + " " + from + " " + to + " " + cardNumber + " " + expirationDate + " " + cvc + " " + price);
 
         }
