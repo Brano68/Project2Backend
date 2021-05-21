@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "BIAuWrl8VNOSaCCwanb0OiT4N3ACnZ6dPxYDKLjIaJ+ifPv1VOOFQ603id23z+xcIVpaXnHclHCLclCx4+AYyQ==",
+  "success": true,
+  "projectFilePath": "C:\\Git\\Project2\\newProject\\WebAppCarRental\\User.Persistance\\User.Persistance.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Branek\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Branek\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
