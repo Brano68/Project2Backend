@@ -11,14 +11,6 @@ namespace APIRequests.DTO
         [JsonRequired]
         public string Login { get; set; }
 
-        [JsonRequired]
-        public string Email { get; set; }
-
-        [JsonRequired]
-        public int CarId { get; set; }
-
-        [JsonRequired]
-        public int UserId { get; set; }
 
         [JsonRequired]
         public string From { get; set; }
@@ -28,6 +20,9 @@ namespace APIRequests.DTO
 
         [JsonRequired]
         public string CardNumber { get; set; }
+
+        [JsonRequired]
+        public string CardName { get; set; }
 
         [JsonRequired]
         public string ExpirationDate { get; set; }

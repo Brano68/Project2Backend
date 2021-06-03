@@ -9,13 +9,15 @@ namespace CheckingCard.Card
     public class Card
     {
         private String cardNumber;
+        private String cardName;
         private String expirationDate;
         private int cvc;
         private int sum;
 
-        public Card(string cardNumber, string expirationDate, int cvc, int sum)
+        public Card(string cardNumber, string cardName, string expirationDate, int cvc, int sum)
         {
             this.cardNumber = cardNumber;
+            this.cardName = cardName;
             this.expirationDate = expirationDate;
             this.cvc = cvc;
             this.sum = sum;
@@ -25,6 +27,12 @@ namespace CheckingCard.Card
         {
             get { return cardNumber; }
             set { cardNumber = value; }
+        }
+
+        public String CardName
+        {
+            get { return cardName; }
+            set { cardName = value; }
         }
         public String ExpirationDate
         {

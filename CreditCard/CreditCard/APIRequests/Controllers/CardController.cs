@@ -25,18 +25,22 @@ namespace APIRequests.Controllers
         public async Task<ActionResult<CardDTO>> PostCard([FromBody] CardDTO cardDTO)
         {
             string login = cardDTO.Login;
-            string email = cardDTO.Email;
-            int carId = cardDTO.CarId;
-            int userId = cardDTO.UserId;
             string from = cardDTO.From;
             string to = cardDTO.To;
             string cardNumber = cardDTO.CardNumber;
+            string cardName = cardDTO.CardName;
             string expirationDate = cardDTO.ExpirationDate;
             int cvc = cardDTO.Cvc;
             int price = cardDTO.Price;
 
+            if(cardNumber == null || cardName == null ||expirationDate == null || cvc == 0 || price == 0)
+            {
+                Message messageError = new Message("No input data", 400);
+                return BadRequest(messageError);
+            }
+
             CheckingCard.Check.Check check = new CheckingCard.Check.Check();
-            int n = check.Checking(cardNumber, expirationDate, cvc, price);
+            int n = check.Checking(cardNumber, cardName, expirationDate, cvc, price);
             if(n == -1)
             {
                 Message message1 = new Message("The card is invalid", 400);
@@ -49,23 +53,11 @@ namespace APIRequests.Controllers
             }
             if (n == 1)
             {
-                PayRequest payRequest = new PayRequest("Payment was successful", price, 200, carId, userId, login, from, to);
-                return Ok(payRequest);
+                Message message3 = new Message("Payment was successful", 200);
+                return Ok(message3);
             }
             Message message = new Message("The card is invalid", 400);
             return BadRequest(message);
         }
-        
-        [HttpGet]
-        [Route("skuska")]
-        public IActionResult PostTest([FromQuery(Name = "ILYA")] string ilya)
-        {
-            
-            
-            
-        
-            return Ok("Ahoj" + ilya);
-        }
-
     }
 }

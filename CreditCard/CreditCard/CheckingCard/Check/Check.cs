@@ -8,11 +8,11 @@ namespace CheckingCard.Check
 {
     public class Check
     {
-        Card.Card card1 = new Card.Card("123456789012", "12.34", 123, 10);
-        Card.Card card2 = new Card.Card("111111111111", "11.11", 111, 20);
-        Card.Card card3 = new Card.Card("222222222222", "22.22", 222, 30);
-        Card.Card card4 = new Card.Card("333333333333", "33.33", 333, 40);
-        Card.Card card5 = new Card.Card("444444444444", "44.44", 444, 50);
+        Card.Card card1 = new Card.Card("1111222233334444", "Peter Novak", "05.23", 123, 900);
+        Card.Card card2 = new Card.Card("5555666677778888", "Pavel Kopkas", "11.24", 111, 30);
+        Card.Card card3 = new Card.Card("9999000011112222", "Matus Popovic", "06.22", 222, 15);
+        Card.Card card4 = new Card.Card("1234567890123456", "Daniela Jurpakova", "06.24", 333, 2500);
+        Card.Card card5 = new Card.Card("2222444466668888", "Laura Bogarova", "04.22", 444, 50);
 
         public List<Card.Card> cards = new List<Card.Card>();
 
@@ -25,13 +25,13 @@ namespace CheckingCard.Check
             cards.Add(card5);
         }
 
-        public int Checking(string cardNumber, string expirationDate, int cvc, int sum)
+        public int Checking(string cardNumber, string cardName, string expirationDate, int cvc, int sum)
         {
 
             AddCards();
             foreach (Card.Card card in cards)
             {
-                if (card.CardNumber.Equals(cardNumber) && card.ExpirationDate.Equals(expirationDate) && card.Cvc == cvc)
+                if (card.CardNumber.Equals(cardNumber) && card.CardName.Equals(cardName) && card.ExpirationDate.Equals(expirationDate) && card.Cvc == cvc)
                 {
                     if (sum < card.Sum)
                     {

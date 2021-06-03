@@ -8,9 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckingCard", "CheckingCard\CheckingCard.csproj", "{041EC9D5-0DE0-4FA9-A505-40EB82179507}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		CheckingCard\CheckingCard.csproj*{b23565b3-c080-48fe-bb46-db8de2872c28}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
