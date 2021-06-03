@@ -1,0 +1,7 @@
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\bin\Debug\CheckingCard.exe.config
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\bin\Debug\CheckingCard.exe
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\bin\Debug\CheckingCard.pdb
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\obj\Debug\CheckingCard.csprojAssemblyReference.cache
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\obj\Debug\CheckingCard.csproj.CoreCompileInputs.cache
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\obj\Debug\CheckingCard.exe
+C:\Kosicka Akademia\Projects\VISMA\Project2Backend\CreditCard\CreditCard\CheckingCard\obj\Debug\CheckingCard.pdb
