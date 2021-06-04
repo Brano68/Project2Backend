@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "u3ecpRq8XyhvZidAxE7A7e0b7HSY8Ia85EaS2m4xekYGqVWBqw8Zqudmx8gVGEMrcmEFMZLk5Vrm7q6XTi+Bbg==",
+  "success": true,
+  "projectFilePath": "C:\\Git\\Project2\\newProject\\WebAppCarRental\\CreateToken\\CreateToken.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Branek\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Branek\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
